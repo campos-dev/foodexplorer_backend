@@ -1,6 +1,6 @@
 const usersRoutes = require("express").Router();
 
-const UsersControllers = require("../src/controllers/usersControllers");
+const UsersControllers = require("../controllers/usersControllers");
 const usersControllers = new UsersControllers();
 
 usersRoutes.post("/", usersControllers.create);

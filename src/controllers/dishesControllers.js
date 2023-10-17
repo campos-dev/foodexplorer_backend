@@ -8,10 +8,8 @@ class DishesControllers {
 
     isActive = "1";
 
-    if (!title || !category || !price || !avatar) {
-      throw new AppError(
-        "Dish name, description, price and picture are mandatory"
-      );
+    if (!title || !category || !price) {
+      throw new AppError("Dish name, description, price are mandatory");
     }
 
     const [dishes_id] = await knex("dishes").insert({

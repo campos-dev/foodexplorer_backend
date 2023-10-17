@@ -3,7 +3,8 @@ const knex = require("../database/knex");
 
 class FavoritesControllers {
   async create(req, res) {
-    const { user_id, dishes_id } = req.params;
+    const user_id = req.user.id;
+    const { dishes_id } = req.params;
     const dish = await knex("dishes").where({ id: dishes_id }).first();
 
     if (dish.isActive === "0") {
@@ -32,7 +33,8 @@ class FavoritesControllers {
   }
 
   async delete(req, res) {
-    const { user_id, dishes_id } = req.params;
+    const user_id = req.user.id;
+    const { dishes_id } = req.params;
     const dish = await knex("dishes").where({ id: dishes_id }).first();
 
     if (dish.isActive === "0") {
