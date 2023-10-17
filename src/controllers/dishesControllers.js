@@ -35,6 +35,25 @@ class DishesControllers {
     return res.json();
   }
 
+  async update(req, res) {
+    const { id } = req.params;
+    const { avatar, title, category, description, price, tags } = req.body;
+
+    await knex("dishes")
+      .update({ avatar, title, category, description, price })
+      .where({ id });
+
+    const dish = await knex("dishes").where({ id }).first();
+
+    tags.map(async (tag) => {
+      await knex("tags").update({ name: tag }).where({ dishes_id: id });
+    });
+
+    const updatedTags = await knex("tags").where({ dishes_id: id });
+
+    return res.json({ dish, updatedTags });
+  }
+
   async show(req, res) {
     const { id } = req.params;
 
