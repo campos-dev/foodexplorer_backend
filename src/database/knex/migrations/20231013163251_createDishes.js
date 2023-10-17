@@ -6,6 +6,7 @@ exports.up = (knex) =>
     table.text("category");
     table.text("description").notNullable();
     table.decimal("price").notNullable();
+    table.bit("isActive");
   });
 
 exports.down = (knex) => knex.schema.dropTable("dishes");

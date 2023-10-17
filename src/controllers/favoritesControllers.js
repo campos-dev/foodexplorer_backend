@@ -6,6 +6,10 @@ class FavoritesControllers {
     const { user_id, dishes_id } = req.params;
     const dish = await knex("dishes").where({ id: dishes_id }).first();
 
+    if (dish.isActive === "0") {
+      throw new AppError("This product was removed");
+    }
+
     if (!dish) {
       throw new AppError("Dish not found");
     }
@@ -29,6 +33,11 @@ class FavoritesControllers {
 
   async delete(req, res) {
     const { user_id, dishes_id } = req.params;
+    const dish = await knex("dishes").where({ id: dishes_id }).first();
+
+    if (dish.isActive === "0") {
+      throw new AppError("This product was removed");
+    }
 
     const existingFavorite = await knex("userFavorite")
       .where({ user_id, dishes_id })
