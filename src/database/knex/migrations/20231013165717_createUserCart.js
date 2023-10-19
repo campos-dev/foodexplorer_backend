@@ -5,7 +5,17 @@ exports.up = (knex) =>
     table.integer("user_id").references("id").inTable("users");
     table.text("title");
     table.integer("amount").notNullable();
-    table.text("status");
+    table
+      .enum(
+        "status",
+        ["pending", "preparing for delivery", "out for delivery", "delivered"],
+        {
+          useNative: true,
+          enumName: "roles",
+        }
+      )
+      .notNullable()
+      .default("pending");
     table.timestamp("created_at").default(knex.fn.now());
     table.timestamp("updated_at").default(knex.fn.now());
   });

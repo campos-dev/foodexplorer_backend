@@ -1,6 +1,6 @@
 const AppError = require("../../utils/AppError");
-const knex = require("../database/knex");
 const DiskStorage = require("../providers/DiskStorage");
+const knex = require("knex")(require("../../knexfile")["development"]);
 
 class DishAvatarControllers {
   async update(req, res) {

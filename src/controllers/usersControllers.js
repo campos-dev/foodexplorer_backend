@@ -1,17 +1,12 @@
 const { hash } = require("bcryptjs");
 const AppError = require("../../utils/AppError");
-
-const sqliteConnection = require("../database/sqlite");
+const knex = require("knex")(require("../../knexfile")["development"]);
 
 class UsersControllers {
   async create(req, res) {
     const { name, email, password } = req.body;
-    const database = await sqliteConnection();
 
-    const checkUserExists = await database.get(
-      "SELECT * FROM users WHERE email =?",
-      [email]
-    );
+    const checkUserExists = await knex("users").where({ email }).first();
 
     if (checkUserExists) {
       throw new AppError("This email was already registered");
@@ -19,10 +14,11 @@ class UsersControllers {
 
     const hashedPassword = await hash(password, 8);
 
-    await database.run(
-      "INSERT INTO users (name, email, password) VALUES(?,?,?)",
-      [name, email, hashedPassword]
-    );
+    await knex("users").insert({
+      name,
+      email,
+      password: hashedPassword,
+    });
 
     res.status(201).json();
   }

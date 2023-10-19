@@ -1,5 +1,5 @@
 const AppError = require("../../utils/AppError");
-const knex = require("../database/knex");
+const knex = require("knex")(require("../../knexfile")["development"]);
 
 class FavoritesControllers {
   async create(req, res) {

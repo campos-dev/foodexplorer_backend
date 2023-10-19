@@ -8,15 +8,36 @@ const dishesControllers = new DishesControllers();
 const DishAvatarControllers = require("../controllers/dishAvatarControllers");
 const dishAvatarControllers = new DishAvatarControllers();
 
-dishesRoutes.post("/", dishesControllers.create);
-dishesRoutes.put("/:id", dishesControllers.update);
+const ensureAuthenticated = require("../middlewares/ensureAuthenticated");
+const verifyUserAuthorization = require("../middlewares/verifyUserAuthorization");
+
+dishesRoutes.post(
+  "/",
+  ensureAuthenticated,
+  verifyUserAuthorization("admin"),
+  dishesControllers.create
+);
+dishesRoutes.put(
+  "/:id",
+  ensureAuthenticated,
+  verifyUserAuthorization("admin"),
+  dishesControllers.update
+);
 dishesRoutes.patch(
   "/avatar/:id",
+  ensureAuthenticated,
+  verifyUserAuthorization("admin"),
   upload.single("avatar"),
   dishAvatarControllers.update
 );
+dishesRoutes.delete(
+  "/:id",
+  ensureAuthenticated,
+  verifyUserAuthorization("admin"),
+  dishesControllers.delete
+);
+
 dishesRoutes.get("/:id", dishesControllers.show);
 dishesRoutes.get("/", dishesControllers.index);
-dishesRoutes.delete("/:id", dishesControllers.delete);
 
 module.exports = dishesRoutes;

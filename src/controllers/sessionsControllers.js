@@ -1,4 +1,4 @@
-const knex = require("../database/knex");
+const knex = require("knex")(require("../../knexfile")["development"]);
 const AppError = require("../../utils/AppError");
 const { compare } = require("bcryptjs");
 const authConfig = require("../configs/auth");
@@ -21,7 +21,7 @@ class SessionsControllers {
 
     const { expiresIn, secret } = authConfig.jwt;
 
-    const token = sign({}, secret, {
+    const token = sign({ role: user.role }, secret, {
       subject: String(user.id),
       expiresIn,
     });
