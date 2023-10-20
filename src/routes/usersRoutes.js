@@ -1,4 +1,5 @@
 const usersRoutes = require("express").Router();
+const ensureAuthenticated = require("../middlewares/ensureAuthenticated.js");
 
 const UsersControllers = require("../controllers/usersControllers");
 const usersControllers = new UsersControllers();
