@@ -43,9 +43,12 @@ class DishesControllers {
 
     const dish = await knex("dishes").where({ id }).first();
 
-    tags.map(async (tag) => {
-      await knex("tags").update({ name: tag }).where({ dishes_id: id });
-    });
+    await knex("tags").where({ dishes_id: id }).del();
+
+    for (let tag of tags) {
+      const tagName = typeof tag === "object" ? tag.name : tag;
+      await knex("tags").insert({ name: tagName, dishes_id: id });
+    }
 
     const updatedTags = await knex("tags").where({ dishes_id: id });
 
