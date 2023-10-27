@@ -20,6 +20,14 @@ const routes = require("./routes");
 
 app.use(routes);
 
+app.use((req, res, next) => {
+  if (req.session && req.session.expires < Date.now()) {
+    res.status(401).send("Session expired");
+  } else {
+    next();
+  }
+});
+
 app.use((error, req, res, next) => {
   if (error instanceof AppError) {
     return res

@@ -32,6 +32,14 @@ class FavoritesControllers {
     });
   }
 
+  async show(req, res) {
+    const { user_id } = req.params;
+
+    const existingFavorite = await knex("userFavorite").where({ user_id });
+
+    return res.json(existingFavorite);
+  }
+
   async delete(req, res) {
     const user_id = req.user.id;
     const { dishes_id } = req.params;
