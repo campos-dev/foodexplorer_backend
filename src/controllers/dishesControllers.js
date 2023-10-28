@@ -82,28 +82,28 @@ class DishesControllers {
   }
 
   async index(req, res) {
-    const { title, category, tags } = req.query;
+    const { search, category } = req.query;
 
     let dishes;
 
-    if (tags) {
-      const filterTags = tags.split(",").map((tag) => tag.trim());
-
-      dishes = await knex("tags")
-        .select(["dishes.id", "dishes.title"])
-        .whereLike("dishes.title", `%${title}%`)
-        .whereLike("dishes.category", `${category}`)
-        .whereIn("name", filterTags)
-        .innerJoin("dishes", "dishes.id", "tags.dishes_id")
-        .whereNot("dishes.isActive", "0") // Add this line
-        .orderBy("dishes.title");
-    } else {
-      dishes = await knex("dishes")
-        .whereLike("title", `%${title}%`)
-        .whereLike("category", `${category}`)
-        .whereNot("isActive", "0") // Add this line
-        .orderBy("title");
-    }
+    dishes = await knex("tags")
+      .distinct(
+        "dishes.id",
+        "dishes.title",
+        "dishes.avatar",
+        "dishes.description",
+        "dishes.price"
+      )
+      .where(function () {
+        this.whereLike("dishes.title", `${search}%`).orWhereLike(
+          "name",
+          `${search}%`
+        );
+      })
+      .whereLike("dishes.category", `${category}`)
+      .innerJoin("dishes", "dishes.id", "tags.dishes_id")
+      .whereNot("dishes.isActive", "0")
+      .orderBy("dishes.title");
 
     const allTags = await knex("tags");
     const dishesWithTags = dishes.map((dish) => {
