@@ -30,7 +30,7 @@ class DishesControllers {
 
     await knex("tags").insert(tagsInserted);
 
-    return res.json();
+    return res.json({ dishes_id });
   }
 
   async update(req, res) {

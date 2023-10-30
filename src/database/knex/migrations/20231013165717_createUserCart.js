@@ -5,6 +5,8 @@ exports.up = (knex) =>
     table.integer("user_id").references("id").inTable("users");
     table.text("title");
     table.integer("amount").notNullable();
+    table.integer("price").notNullable();
+    table.integer("subTotal").notNullable();
     table
       .enum(
         "status",

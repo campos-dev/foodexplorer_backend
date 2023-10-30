@@ -4,9 +4,9 @@ const knex = require("knex")(require("../../knexfile")["development"]);
 class CartControllers {
   async create(req, res) {
     const user_id = req.user.id;
-    const { dishes_id, amount } = req.body;
+    const { id, amount } = req.body;
 
-    const dish = await knex("dishes").where({ id: dishes_id }).first();
+    const dish = await knex("dishes").where({ id }).first();
 
     if (dish.isActive === "0") {
       throw new AppError("This product was removed");
@@ -14,10 +14,12 @@ class CartControllers {
 
     await knex("userCart").insert({
       user_id,
-      dishes_id,
+      dishes_id: id,
       title: dish.title,
       amount,
       status: "pending",
+      price: dish.price,
+      subTotal: amount * dish.price,
     });
 
     return res.json();
@@ -29,7 +31,7 @@ class CartControllers {
 
     let user_id;
     if (role === "admin") {
-      user_id = req.body.user_id;
+      user_id = req.user.id;
     } else {
       user_id = req.user.id;
     }
@@ -45,7 +47,7 @@ class CartControllers {
 
     let user_id;
     if (role === "admin") {
-      user_id = req.body.user_id;
+      user_id = req.user.id;
     } else {
       user_id = req.user.id;
     }
@@ -66,7 +68,7 @@ class CartControllers {
 
     let user_id;
     if (role === "admin") {
-      user_id = req.body.user_id;
+      user_id = req.user.id;
     } else {
       user_id = req.user.id;
     }
