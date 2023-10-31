@@ -95,9 +95,9 @@ class DishesControllers {
         "dishes.price"
       )
       .where(function () {
-        this.whereLike("dishes.title", `${search}%`).orWhereLike(
+        this.whereLike("dishes.title", `%${search}%`).orWhereLike(
           "name",
-          `${search}%`
+          `%${search}%`
         );
       })
       .whereLike("dishes.category", `${category}`)
