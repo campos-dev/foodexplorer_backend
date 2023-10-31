@@ -14,6 +14,7 @@ app.use(
       "http://127.0.0.1:5173",
       "https://explorer-foodexplorer.netlify.app",
     ],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true,
   })
 );
