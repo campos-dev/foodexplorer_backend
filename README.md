@@ -1,3 +1,5 @@
+https://explorer-foodexplorer.netlify.app/
+
 Neste projeto foi desenvolvida uma homepage para pedidos de alimentos.
 Ele segue uma arquitetura REST - sendo separado em frontend e backend sendo os dados do administrador e dos clientes armazenados em um banco dados, assim como as informações dos pratos, seleção de pratos favoritos, marcadores com os ingredientes dos pratos e informações dos pedidos. O app utiliza os métodos HTTP, como GET, POST, PUT, PATCH e DELETE. Transfere os dados entre cliente e servidor em um formato JSON e além de
 manter o estado da aplicação no cliente, em vez de armazená-lo no servidor.
