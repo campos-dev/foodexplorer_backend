@@ -7,22 +7,9 @@ const cors = require("cors");
 const express = require("express");
 const app = express();
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
-
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "http://127.0.0.1:5173",
-      "https://explorer-foodexplorer.netlify.app",
-    ],
+    origin: "https://explorer-foodexplorer.netlify.app",
     credentials: true,
   })
 );
