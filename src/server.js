@@ -7,12 +7,7 @@ const cors = require("cors");
 const express = require("express");
 const app = express();
 
-app.use(
-  cors({
-    origin: "https://explorer-foodexplorer.netlify.app",
-    credentials: true,
-  })
-);
+app.use(cors());
 
 app.use(express.json());
 app.use("/files", express.static(uploadConfig.UPLOADS_FOLDER));
