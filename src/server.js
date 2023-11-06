@@ -3,19 +3,23 @@ require("express-async-errors");
 const AppError = require("../utils/AppError");
 const uploadConfig = require("./configs/upload");
 
+const cookieParser = require("cookie-parser");
+
 const cors = require("cors");
 const express = require("express");
 const app = express();
 
 app.use(
   cors({
-    origin: "https://explorer-foodexplorer.netlify.app",
+    origin: ["https://explorer-foodexplorer.netlify.app/"],
     credentials: true,
   })
 );
 
 app.use(express.json());
 app.use("/files", express.static(uploadConfig.UPLOADS_FOLDER));
+
+app.use(cookieParser());
 
 const routes = require("./routes");
 
