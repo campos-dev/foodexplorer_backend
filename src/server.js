@@ -11,7 +11,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://explorer-foodexplorer.netlify.app/",
+    origin: "https://explorer-foodexplorer.netlify.app",
     credentials: true,
   })
 );
