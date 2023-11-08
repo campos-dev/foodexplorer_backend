@@ -23,4 +23,3 @@ O banco de dados é dividido nas tabelas: users, userFavorite, userCart, tags an
 #A tabela userCart apresenta os campos de id, dishes_id(conectado com id da tabela dishes), user_id (conectado com id da tabela users), title, amount, price, subTotal(para cada item adicionado multiplica-se o valor pela quantidade), status(enum de pending, preparing for delivery, out for delivery, delivered ), created_at e updated_at.
 
 Para que haja uma maior segurança foi criado um arquivo .env que dispõe de algumas informações que só podem ser acessadas por os desenvolvedores. Um arquivo .envExample foi criado também para que se saibam quais campos foram omitidos por terem dados sensíveis.
-Está sendo utilizado também no Backend o PM2 que é um gerenciador de processos que permite que o backend seja reiniciado automaticamente caso haja qualquer problema.
